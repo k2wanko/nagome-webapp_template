@@ -1,7 +1,10 @@
-WebSocket Connection
-====================
+WebApp template
+===============
 
-Plugin to enable your Nagome plugin to connect in WebSocket.
+Template of web application as Nagome UI.
 
-This Nagome plugin makes pipeline between your plugin and Nagome.
-Once your plugin connect to this plugin in WebSocket, it can communicate with Nagome like its TCP connection.
+This Nagome plugin serves WebSocket connection for a web app and the web app itself.
+
+Usage
+-----
+

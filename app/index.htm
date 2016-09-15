@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>sample app</title>
+  </head>
+  <body>
+    <h1>sample app</h1>
+    <form>
+      <input type="text" name="input" id="input" />
+      <input type="button" onclick="send()" value="send" />
+      <div>
+        <pre id="output">
+        </pre>
+      </div>
+    </form>
+    <script type="text/javascript" charset="utf-8">
+
+var wsconn = new WebSocket("ws://localhost:8753/ws");
+
+wsconn.onerror = function(err) {
+  console.log(err);
+};
+
+wsconn.onopen = function() {
+  output.textContent += "conected\n";
+};
+
+wsconn.onmessage = function (evt) {
+  output.textContent += evt.data;
+};
+
+wsconn.onclose = function() {
+  output.textContent += "closed\n";
+  wsconn = new WebSocket("ws://localhost:8753/ws");
+};
+
+window.addEventListener("beforeunload", function (event) {
+  wsconn.close();
+});
+
+function send() {
+  wsconn.send(input.value);
+}
+    </script>
+  </body>
+</html>
