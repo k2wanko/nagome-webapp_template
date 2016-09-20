@@ -17,22 +17,33 @@
     </form>
     <script type="text/javascript" charset="utf-8">
 
-var wsconn = new WebSocket("ws://localhost:8753/ws");
+let wsconn = new WebSocket("ws://localhost:8753/ws");
 
-wsconn.onerror = function(err) {
+wsconn.onerror = (err) => {
   console.log(err);
 };
 
-wsconn.onopen = function() {
-  output.textContent += "conected\n";
+wsconn.onopen = () => {
+  document.getElementById("output").textContent += "conected\n";
+  // process a message here
 };
 
-wsconn.onmessage = function (evt) {
-  output.textContent += evt.data;
+function message(m) {
+    document.getElementById("output").textContent += m + "\n";
+}
+
+let remainMes = "";
+wsconn.onmessage = function (m) {
+  let ms = m.data.split("\n");
+  ms[0] = remainMes + ms[0];
+  remainMes = ms.pop();
+  for (let i = ms.length - 1; i >= 0; i--) {
+    message(ms[i]);
+  }
 };
 
-wsconn.onclose = function() {
-  output.textContent += "closed\n";
+wsconn.onclose = () => {
+  document.getElementById("output").textContent += "closed\n";
   wsconn = new WebSocket("ws://localhost:8753/ws");
 };
 
@@ -41,7 +52,7 @@ window.addEventListener("beforeunload", function (event) {
 });
 
 function send() {
-  wsconn.send(input.value);
+  wsconn.send(document.getElementById("input").value);
 }
     </script>
   </body>
