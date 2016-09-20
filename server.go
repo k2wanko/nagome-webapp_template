@@ -79,7 +79,6 @@ read:
 // BridgeServer receive a connection
 func BridgeServer(wsc *websocket.Conn) {
 	fmt.Println("connected to a client")
-
 	go func() {
 		_, err := io.Copy(ngmw, wsc)
 		if err != nil {
@@ -93,8 +92,6 @@ func BridgeServer(wsc *websocket.Conn) {
 		fmt.Println(err)
 		return
 	}
-
-	fmt.Println("disconnected")
 }
 
 // This example demonstrates a trivial echo server.
