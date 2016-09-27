@@ -37,14 +37,11 @@ wsconn.onmessage = function (m) {
   let ms = m.data.split("\n");
   ms[0] = remainMes + ms[0];
   remainMes = ms.pop();
-  for (let i = ms.length - 1; i >= 0; i--) {
-    message(ms[i]);
-  }
+  ms.forEach(message)
 };
 
 wsconn.onclose = () => {
   document.getElementById("output").textContent += "closed\n";
-  wsconn = new WebSocket("ws://localhost:8753/ws");
 };
 
 window.addEventListener("beforeunload", function (event) {
